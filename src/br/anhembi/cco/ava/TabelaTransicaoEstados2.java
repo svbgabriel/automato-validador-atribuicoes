@@ -1,7 +1,7 @@
 package br.anhembi.cco.ava;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -10,12 +10,16 @@ import java.util.Map;
 public class TabelaTransicaoEstados2 {
 
     //private final Map<State, Map<String, State>> states;
-    private final Map<Estado2, Map<String, Estado2>> estados;
+    //private final Map<Estado, Map<Token, Estado>> estados;
+    
+    
+    private final List<Transicao> estados;
+    
     
     
     public TabelaTransicaoEstados2() {
         //this.states = new HashMap<>();
-        this.estados = new HashMap<>();
+        this.estados = new ArrayList<>();
     }
     
     
@@ -39,18 +43,27 @@ public class TabelaTransicaoEstados2 {
 //    }
     
     
-    public void add(Estado2 ini, String simbolo, Estado2 end) {
-        Map<String, Estado2> estadoFim = new HashMap<>();
-        estadoFim.put(simbolo, end);
-        estados.put(ini, estadoFim);
+    public void add(Estado ini, Token simbolo, Estado end) {
+        add(new Transicao(ini, simbolo, end));
+    }
+    
+    public void add(Transicao transicao) {
+        for(Transicao t : estados) {
+            if(t.getEstadoInicial().equals(transicao.getEstadoInicial()) && 
+                    t.getSimbolo().equals(transicao.getSimbolo())) {
+                return;
+            }
+        }
+        estados.add(transicao);
     }
     
     
-    public Estado2 transicao(Estado2 ini, String simbolo) {
-        Estado2 res = null;
-        Map<String, Estado2> m = estados.get(ini);
-        if(m != null) {
-            res = m.get(simbolo);
+    public Estado transicao(Estado ini, Token simbolo) {
+        Estado res = null;
+        for(Transicao t : estados) {
+            if(t.getEstadoInicial().equals(ini) && t.getSimbolo().equals(simbolo)) {
+                res = t.getEstadoFinal();
+            }
         }
         return res;
     }

@@ -1,9 +1,7 @@
 package br.anhembi.cco.ava;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -24,7 +22,7 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        String input = "int";
+        String input = "bola ";
         /*
         
         estado      símbolo     estado
@@ -41,72 +39,35 @@ public class Main {
         */
         
         Estado estadoInicial = new Estado("Inicial");
-        Estado estadoI = new Estado("I");
-        Estado estadoIN = new Estado("IN");
-        Estado estadoINT = new Estado("INT");
+        Estado estadoPL = new Estado("PrimeiraLetra");
+        Estado estadoESP = new Estado("Espaco");
+        Estado estadoLIXO = new Estado("Lixo");
         Estado estadoSAIDA = new Estado("SAIDA");
         
         
-        TabelaTransicaoEstados tte = new TabelaTransicaoEstados();
+        TabelaTransicaoEstados2 tte = new TabelaTransicaoEstados2();
         
 //        tte.add(State.Inicial, "i", State.I);
 //        tte.add(State.I, "n", State.IN);
 //        tte.add(State.IN, "t", State.INT);
 
-        tte.add(estadoInicial, "i", estadoI);
-        tte.add(estadoI, "n", estadoIN);
-        tte.add(estadoIN, "t", estadoINT); 
-        tte.add(estadoINT, " ", estadoSAIDA);
+        tte.add(estadoInicial, Token.LETRA_MINUSCULA, estadoPL);
+        tte.add(estadoPL, Token.LETRA_MINUSCULA, estadoPL);
+        tte.add(estadoPL, Token.DIGITO, estadoPL);
+        tte.add(estadoPL, Token.UNDERSCORE, estadoPL);
+        tte.add(estadoPL, Token.ESPACO, estadoSAIDA); 
+        //tte.add(estadoINT, " ", estadoSAIDA);
 
         Estado estadoAtual = estadoInicial;
         char[] chars = input.toCharArray();
         for(char c : chars) {
-            estadoAtual = tte.transicao(estadoAtual, String.valueOf(c));
+            System.out.println(estadoAtual );
+            estadoAtual = tte.transicao(estadoAtual, Token.what(String.valueOf(c)));
+            System.out.println(c + " = " + Token.what(String.valueOf(c)) + " -> " + estadoAtual);
         }
         
         System.out.println("Estado atual: " + estadoAtual);
         
     }
-    
-//    private static void transicao(State ini, String simbolo) {
-//        estadoAtual = estados.get(ini).get(simbolo);
-//    }
-    
-//    private static void transicao(State ini, char simbolo) {
-//        switch(ini) {
-//            case Inicial:
-//                if(simbolo == 'i') {
-//                    estadoAtual = State.I;
-//                } else {
-//                    estadoAtual = State.LIXO;
-//                }
-//                break;
-//                
-//            case I:
-//                if(simbolo == 'n') {
-//                    estadoAtual = State.IN;
-//                } else {
-//                    estadoAtual = State.LIXO;
-//                }
-//                break; 
-//                
-//            case IN:
-//                if(simbolo == 't') {
-//                    estadoAtual = State.INT;
-//                } else {
-//                    estadoAtual = State.LIXO;
-//                }
-//                break;
-//                
-//            case INT:
-//                if(simbolo == ' ') {
-//                    estadoAtual = State.Inicial;
-//                    pilha.add("int");
-//                } else {
-//                    estadoAtual = State.LIXO;
-//                }
-//                break;
-//        }
-//    }
-    
+      
 }

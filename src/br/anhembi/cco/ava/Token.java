@@ -4,7 +4,7 @@ package br.anhembi.cco.ava;
  *
  * @author sumlauf
  */
-public enum Estado2 {
+public enum Token {
     LETRA_MINUSCULA ("[a-z]"),
     DIGITO ("[0-9]"),
     UNDERSCORE ("_"),
@@ -15,12 +15,14 @@ public enum Estado2 {
     OP_ARIT_MULT ("\\*"),
     OP_ARIT_DIV ("\\/"),
     PV (";"),
+    ESPACO (" "),
+    LIXO ("");
     
-    IDENTIFICADOR ("[a-z]([a-z]|[0-9]|_)*");
+    //IDENTIFICADOR ("[a-z]([a-z]|[0-9]|_)*");
     
     private final String pattern;
     
-    Estado2(String pattern) {
+    Token(String pattern) {
         this.pattern = pattern;
     }
     
@@ -28,13 +30,21 @@ public enum Estado2 {
         return simbolo.matches(pattern);
     }
     
+    public static Token what(String simbolo) {
+        for(Token t : Token.values()) {
+            if(t.isValid(simbolo)) {
+                return t;
+            }
+        }
+        return LIXO;
+    }
     
     
     
     public static void main(String[] args) {
         //System.out.println(IDENTIFICADOR.isValid("a9_s"));
         //System.out.println(OP_ATRIB.isValid("="));
-        System.out.println(PV.isValid(";"));
+        System.out.println(what("\n"));
     }
     
     
