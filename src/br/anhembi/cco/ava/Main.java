@@ -1,7 +1,6 @@
 package br.anhembi.cco.ava;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Queue;
 
 /**
  *
@@ -9,20 +8,13 @@ import java.util.List;
  */
 public class Main {
 
-//    static State estadoAtual = State.Inicial;
-    
-    
-    static List<String> pilha = new ArrayList<>();
-      
-//    static Map<State, Map<String, State>> estados = new HashMap<>();
-    
-   
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
-        String input = "bola ";
+        String input = "bola = 10;";
         /*
         
         estado      símbolo     estado
@@ -35,38 +27,41 @@ public class Main {
         IN          ^t          LIXO
         INT         ' '         SAIDA
         INT         ^' '        LIXO
-        
         */
         
-        Estado estadoInicial = new Estado("Inicial");
-        Estado estadoPL = new Estado("PrimeiraLetra");
-        Estado estadoESP = new Estado("Espaco");
-        Estado estadoLIXO = new Estado("Lixo");
-        Estado estadoSAIDA = new Estado("SAIDA");
+        Estado e_inicial = new Estado("Inicial");
+        Estado e_primeira_letra = new Estado("PrimeiraLetra");
+        Estado e_espaco_depois_de_identificador = new Estado("EspacoDepoisDeIdentificador", true);
+        //Estado e_guarda_lexema = new Estado("GuardaLexema");
+        Estado e_chegou_um_opatrib = new Estado("Igual");
+        Estado e_espaco_depois_de_opatrib = new Estado("EspacoDepoisDeOpAtribuicao", true);
+        Estado e_numero = new Estado("Numero");
+        Estado e_pv_depois_de_digito = new Estado("PontoVirgulaDepoisDeDigito", true);
+        Estado e_espaco_depois_de_digito = new Estado("EspacoDepoisDeDigito", true);
         
         
-        TabelaTransicaoEstados2 tte = new TabelaTransicaoEstados2();
+        TabelaTransicaoEstados tte = new TabelaTransicaoEstados();
+        // Identificador
+        tte.add(e_inicial, Token.LETRA_MINUSCULA, e_primeira_letra);
+        tte.add(e_primeira_letra, Token.LETRA_MINUSCULA, e_primeira_letra);
+        tte.add(e_primeira_letra, Token.DIGITO, e_primeira_letra);
+        tte.add(e_primeira_letra, Token.UNDERSCORE, e_primeira_letra);
+        tte.add(e_primeira_letra, Token.ESPACO, e_espaco_depois_de_identificador);
         
-//        tte.add(State.Inicial, "i", State.I);
-//        tte.add(State.I, "n", State.IN);
-//        tte.add(State.IN, "t", State.INT);
+        // Sinal de igual
+        tte.add(e_espaco_depois_de_identificador, Token.OP_ATRIB, e_chegou_um_opatrib);
+        tte.add(e_chegou_um_opatrib, Token.ESPACO, e_espaco_depois_de_opatrib);
+        
+        // valor
+        tte.add(e_espaco_depois_de_opatrib, Token.DIGITO, e_numero);
+        tte.add(e_numero, Token.DIGITO, e_numero);
+        tte.add(e_numero, Token.PV, e_pv_depois_de_digito);
+        tte.add(e_numero, Token.ESPACO, e_espaco_depois_de_digito);
+        
+        
+        MaquinaEstados maquina = new MaquinaEstados(tte);
+        maquina.processa(input, e_inicial);
 
-        tte.add(estadoInicial, Token.LETRA_MINUSCULA, estadoPL);
-        tte.add(estadoPL, Token.LETRA_MINUSCULA, estadoPL);
-        tte.add(estadoPL, Token.DIGITO, estadoPL);
-        tte.add(estadoPL, Token.UNDERSCORE, estadoPL);
-        tte.add(estadoPL, Token.ESPACO, estadoSAIDA); 
-        //tte.add(estadoINT, " ", estadoSAIDA);
-
-        Estado estadoAtual = estadoInicial;
-        char[] chars = input.toCharArray();
-        for(char c : chars) {
-            System.out.println(estadoAtual );
-            estadoAtual = tte.transicao(estadoAtual, Token.what(String.valueOf(c)));
-            System.out.println(c + " = " + Token.what(String.valueOf(c)) + " -> " + estadoAtual);
-        }
-        
-        System.out.println("Estado atual: " + estadoAtual);
         
     }
       

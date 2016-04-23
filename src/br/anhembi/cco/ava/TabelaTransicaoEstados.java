@@ -1,57 +1,41 @@
 package br.anhembi.cco.ava;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Sérgio Umlauf
  */
-public class TabelaTransicaoEstados {
-
-    //private final Map<State, Map<String, State>> states;
-    private final Map<Estado, Map<String, Estado>> estados;
+public class TabelaTransicaoEstados {    
     
+    private final List<Transicao> estados;
+
     
     public TabelaTransicaoEstados() {
-        //this.states = new HashMap<>();
-        this.estados = new HashMap<>();
+        this.estados = new ArrayList<>();
     }
     
     
-//    public void add(State ini, String simbolo, State end) {
-//        Map<String, State> estadoFim = new HashMap<>();
-//        estadoFim.put(simbolo, end);
-//        states.put(ini, estadoFim);
-//    }
     
     
-//    public State transicao(State ini, String simbolo) {
-//        State res = null;
-//        Map<String, State> m = states.get(ini);
-//        if(m != null) {
-//            res = m.get(simbolo);
-//        }
-//        if(res == null) {
-//            return State.LIXO;
-//        }
-//        return res;
-//    }
-    
-    
-    public void add(Estado ini, String simbolo, Estado end) {
-        Map<String, Estado> estadoFim = new HashMap<>();
-        estadoFim.put(simbolo, end);
-        estados.put(ini, estadoFim);
+    public void add(Estado ini, Token simbolo, Estado end) {
+        add(new Transicao(ini, simbolo, end));
     }
     
-    
-    public Estado transicao(Estado ini, String simbolo) {
-        Estado res = null;
-        Map<String, Estado> m = estados.get(ini);
-        if(m != null) {
-            res = m.get(simbolo);
+    public void add(Transicao transicao) {
+        for(Transicao t : getEstados()) {
+            if(t.getEstadoInicial().equals(transicao.getEstadoInicial()) && 
+                    t.getSimbolo().equals(transicao.getSimbolo())) {
+                return;
+            }
         }
-        return res;
+        getEstados().add(transicao);
     }
+
+
+    public List<Transicao> getEstados() {
+        return estados;
+    }
+
 }
