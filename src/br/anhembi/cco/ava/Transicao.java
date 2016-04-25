@@ -7,19 +7,37 @@ package br.anhembi.cco.ava;
 public class Transicao {
     
     private Estado estadoInicial;
-    private Token simbolo;
+    private Simbolo simbolo;
     private Estado estadoFinal;
+    private Token tokenAnterior;
+    private Token tokenAtual;
     
     
     public Transicao() {
-        
     }
     
-    public Transicao(Estado estadoInicial, Token simbolo, Estado estadoFinal) {
+    public Transicao(Estado estadoInicial, Simbolo simbolo, Estado estadoFinal) {
         this.estadoInicial = estadoInicial;
         this.simbolo = simbolo;
         this.estadoFinal = estadoFinal;
     }
+    
+    public Transicao(Estado estadoInicial, Simbolo simbolo, Estado estadoFinal, Token tokenAnterior) {
+        this.estadoInicial = estadoInicial;
+        this.simbolo = simbolo;
+        this.estadoFinal = estadoFinal;
+        this.tokenAnterior = tokenAnterior;
+    }
+    
+    
+    public Transicao(Estado estadoInicial, Simbolo simbolo, Estado estadoFinal, Token tokenAnterior, Token tokenAtual) {
+        this.estadoInicial = estadoInicial;
+        this.simbolo = simbolo;
+        this.estadoFinal = estadoFinal;
+        this.tokenAnterior = tokenAnterior;
+        this.tokenAtual = tokenAtual;
+    }
+    
     
 
     public Estado getEstadoInicial() {
@@ -30,11 +48,11 @@ public class Transicao {
         this.estadoInicial = estadoInicial;
     }
 
-    public Token getSimbolo() {
+    public Simbolo getSimbolo() {
         return simbolo;
     }
 
-    public void setSimbolo(Token simbolo) {
+    public void setSimbolo(Simbolo simbolo) {
         this.simbolo = simbolo;
     }
 
@@ -45,5 +63,20 @@ public class Transicao {
     public void setEstadoFinal(Estado estadoFinal) {
         this.estadoFinal = estadoFinal;
     }
-    
+
+    public Token getTokenAnterior() {
+        return tokenAnterior;
+    }
+
+    public void setTokenAnterior(Token tokenAnterior) {
+        this.tokenAnterior = tokenAnterior;
+    }
+
+    public Token getTokenAtual() {
+        return tokenAtual;
+    }
+
+    public void setTokenAtual(Token tokenAtual) {
+        this.tokenAtual = tokenAtual;
+    }    
 }

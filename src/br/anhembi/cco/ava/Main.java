@@ -1,19 +1,13 @@
 package br.anhembi.cco.ava;
 
-import java.util.Queue;
-
 /**
  *
  * @author sumlauf
  */
 public class Main {
 
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        
+
         String input = "bola = 10;";
         /*
         
@@ -29,40 +23,62 @@ public class Main {
         INT         ^' '        LIXO
         */
         
-        Estado e_inicial = new Estado("Inicial");
-        Estado e_primeira_letra = new Estado("PrimeiraLetra");
-        Estado e_espaco_depois_de_identificador = new Estado("EspacoDepoisDeIdentificador", true);
-        //Estado e_guarda_lexema = new Estado("GuardaLexema");
-        Estado e_chegou_um_opatrib = new Estado("Igual");
-        Estado e_espaco_depois_de_opatrib = new Estado("EspacoDepoisDeOpAtribuicao", true);
-        Estado e_numero = new Estado("Numero");
-        Estado e_pv_depois_de_digito = new Estado("PontoVirgulaDepoisDeDigito", true);
-        Estado e_espaco_depois_de_digito = new Estado("EspacoDepoisDeDigito", true);
+        Estado q0 = new Estado("Inicial");
+        Estado q1 = new Estado("PrimeiraLetra");
+        Estado q2 = new Estado("Igual");
+        Estado q3 = new Estado("LetraMinusculaDepoisDeOpAtrib");
+        Estado q4 = new Estado("OperadorDepoisDeIdentificador");
+        Estado q5 = new Estado("LetraMinusculaDepoisDeOperador");
+        Estado q7 = new Estado("PrimeiroDigito");
+        Estado q8 = new Estado("Ponto");
+        Estado q9 = new Estado("SegundoDigito");
+        Estado q6 = new Estado("Final", true); // Estado final
         
         
         TabelaTransicaoEstados tte = new TabelaTransicaoEstados();
-        // Identificador
-        tte.add(e_inicial, Token.LETRA_MINUSCULA, e_primeira_letra);
-        tte.add(e_primeira_letra, Token.LETRA_MINUSCULA, e_primeira_letra);
-        tte.add(e_primeira_letra, Token.DIGITO, e_primeira_letra);
-        tte.add(e_primeira_letra, Token.UNDERSCORE, e_primeira_letra);
-        tte.add(e_primeira_letra, Token.ESPACO, e_espaco_depois_de_identificador);
-        
-        // Sinal de igual
-        tte.add(e_espaco_depois_de_identificador, Token.OP_ATRIB, e_chegou_um_opatrib);
-        tte.add(e_chegou_um_opatrib, Token.ESPACO, e_espaco_depois_de_opatrib);
-        
-        // valor
-        tte.add(e_espaco_depois_de_opatrib, Token.DIGITO, e_numero);
-        tte.add(e_numero, Token.DIGITO, e_numero);
-        tte.add(e_numero, Token.PV, e_pv_depois_de_digito);
-        tte.add(e_numero, Token.ESPACO, e_espaco_depois_de_digito);
+        // q0 -->
+        tte.add(q0, Simbolo.LETRA_MINUSCULA, q1);
+        // q1 -->
+        tte.add(q1, Simbolo.LETRA_MINUSCULA, q1);
+        tte.add(q1, Simbolo.DIGITO, q1);
+        tte.add(q1, Simbolo.UNDERSCORE, q1);
+        tte.add(q1, Simbolo.IGUAL, q2, Token.IDENTIFICADOR, Token.OP_ATRIB);
+        // q2 -->
+        tte.add(q2, Simbolo.LETRA_MINUSCULA, q3);
+        tte.add(q2, Simbolo.DIGITO, q7);
+        // q3 -->
+        tte.add(q3, Simbolo.LETRA_MINUSCULA, q3);
+        tte.add(q3, Simbolo.DIGITO, q3);
+        tte.add(q3, Simbolo.UNDERSCORE, q3);
+        tte.add(q3, Simbolo.OPERADOR, q4, Token.IDENTIFICADOR);
+        // q4 -->
+        tte.add(q4, Simbolo.LETRA_MINUSCULA, q5);
+        tte.add(q4, Simbolo.DIGITO, q7);
+        // q5 -->
+        tte.add(q5, Simbolo.LETRA_MINUSCULA, q5);
+        tte.add(q5, Simbolo.DIGITO, q5);
+        tte.add(q5, Simbolo.UNDERSCORE, q5);
+        tte.add(q5, Simbolo.PONTO_VIRGULA, q6, Token.IDENTIFICADOR, Token.PV);
+        tte.add(q5, Simbolo.OPERADOR, q4, Token.IDENTIFICADOR);
+        // q6 -->
+        tte.add(q6, Simbolo.LETRA_MINUSCULA, q1);
+        // q7 -->
+        tte.add(q7, Simbolo.DIGITO, q7);
+        tte.add(q7, Simbolo.OPERADOR, q4, Token.NUMERO);
+        tte.add(q7, Simbolo.PONTO, q8);
+        tte.add(q7, Simbolo.PONTO_VIRGULA, q6, Token.NUMERO, Token.PV);
+        // q8 -->
+        tte.add(q8, Simbolo.DIGITO, q9);
+        // q9 -->
+        tte.add(q9, Simbolo.DIGITO, q9);
+        tte.add(q9, Simbolo.OPERADOR, q4, Token.NUMERO);
+        tte.add(q9, Simbolo.PONTO_VIRGULA, q6, Token.NUMERO, Token.PV);
         
         
         MaquinaEstados maquina = new MaquinaEstados(tte);
-        maquina.processa(input, e_inicial);
-
+        maquina.processa(input, q0);
         
+        maquina.executa();
     }
       
 }

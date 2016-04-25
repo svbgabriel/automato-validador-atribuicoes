@@ -10,8 +10,6 @@ public class Estado {
 
     private String nome;
     private boolean fim;
-    private boolean guardaLexema;
-    
     
     
     public Estado() {
@@ -22,14 +20,8 @@ public class Estado {
         this.nome = nome;
     }
     
-    public Estado(String nome, boolean guardaLexema) {
+    public Estado(String nome, boolean fim) {
         this.nome = nome;
-        this.guardaLexema = guardaLexema;
-    }
-    
-    public Estado(String nome, boolean guardaLexema, boolean fim) {
-        this.nome = nome;
-        this.guardaLexema = guardaLexema;
         this.fim = fim;
     }
     
@@ -49,16 +41,7 @@ public class Estado {
     public void setFim(boolean fim) {
         this.fim = fim;
     }
-
-    public boolean isGuardaLexema() {
-        return guardaLexema;
-    }
-
-    public void setGuardaLexema(boolean guardaLexema) {
-        this.guardaLexema = guardaLexema;
-    }
-    
-    
+   
     
     
     
@@ -85,5 +68,4 @@ public class Estado {
         return hash;
     }
 
-    
 }

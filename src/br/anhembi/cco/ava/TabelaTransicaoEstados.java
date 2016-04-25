@@ -19,8 +19,16 @@ public class TabelaTransicaoEstados {
     
     
     
-    public void add(Estado ini, Token simbolo, Estado end) {
+    public void add(Estado ini, Simbolo simbolo, Estado end) {
         add(new Transicao(ini, simbolo, end));
+    }
+    
+    public void add(Estado ini, Simbolo simbolo, Estado end, Token tokenAnterior) {
+        add(new Transicao(ini, simbolo, end, tokenAnterior));
+    }
+
+    public void add(Estado ini, Simbolo simbolo, Estado end, Token tokenAnterior, Token tokenAtual) {
+        add(new Transicao(ini, simbolo, end, tokenAnterior, tokenAtual));
     }
     
     public void add(Transicao transicao) {
