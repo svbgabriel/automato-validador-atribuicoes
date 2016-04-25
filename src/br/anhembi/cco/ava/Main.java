@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String input = "bola = 10;";
+        String input = "bola = 10 + 5 * 2;";
         /*
         
         estado      símbolo     estado
@@ -59,19 +59,19 @@ public class Main {
         tte.add(q5, Simbolo.DIGITO, q5);
         tte.add(q5, Simbolo.UNDERSCORE, q5);
         tte.add(q5, Simbolo.PONTO_VIRGULA, q6, Token.IDENTIFICADOR, Token.PV);
-        tte.add(q5, Simbolo.OPERADOR, q4, Token.IDENTIFICADOR);
+        tte.add(q5, Simbolo.OPERADOR, q4, Token.IDENTIFICADOR, Token.OP_ARIT);
         // q6 -->
         tte.add(q6, Simbolo.LETRA_MINUSCULA, q1);
         // q7 -->
         tte.add(q7, Simbolo.DIGITO, q7);
-        tte.add(q7, Simbolo.OPERADOR, q4, Token.NUMERO);
+        tte.add(q7, Simbolo.OPERADOR, q4, Token.NUMERO, Token.OP_ARIT);
         tte.add(q7, Simbolo.PONTO, q8);
         tte.add(q7, Simbolo.PONTO_VIRGULA, q6, Token.NUMERO, Token.PV);
         // q8 -->
         tte.add(q8, Simbolo.DIGITO, q9);
         // q9 -->
         tte.add(q9, Simbolo.DIGITO, q9);
-        tte.add(q9, Simbolo.OPERADOR, q4, Token.NUMERO);
+        tte.add(q9, Simbolo.OPERADOR, q4, Token.NUMERO, Token.OP_ARIT);
         tte.add(q9, Simbolo.PONTO_VIRGULA, q6, Token.NUMERO, Token.PV);
         
         

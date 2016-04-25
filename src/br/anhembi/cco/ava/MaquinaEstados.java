@@ -83,13 +83,11 @@ public class MaquinaEstados {
     
     
     public void executa() {    
-        float n = 0;
-        float res = 0;
-        Lexema lex;
-        boolean inicio = true;
-        Token ultimoToken;
+
         
+        Lexema lex;
         Map<String, Float> variaveis = new HashMap<>();
+        String nomeVariavel;
         
         while(!operacoes.isEmpty()) {
             lex = operacoes.poll();
@@ -97,37 +95,57 @@ public class MaquinaEstados {
                        
             if(lex.getToken() == Token.IDENTIFICADOR && operacoes.peek().getToken() == Token.OP_ATRIB) {
                 // identificador op_atrib
+                nomeVariavel = lex.getValor();
+               
+                lex = operacoes.poll(); // OP_ATRIB
+                Token t = null;
 
+                float n = 0;
+                float res = 0;
+                boolean inicio = true;
+                Token ultimoToken;
+                
+                while(t != Token.PV) {
+                    lex = operacoes.poll();
+                    t = lex.getToken();
+                    
+                    if(t == Token.NUMERO) {
+                        if(inicio) {
+                            res = Float.parseFloat(lex.getValor());
+                        } else {
+                            n = Float.parseFloat(lex.getValor());
+                        }
+                    }
+                    if(t == Token.OP_ARIT) {
+                        switch(lex.getValor()) {
+                            case "+":
+                                res += Float.parseFloat(operacoes.poll().getValor());
+                                break;
+                            case "-":
+                                res -= Float.parseFloat(operacoes.poll().getValor());
+                                break;
+                            case "*":
+                                res *= Float.parseFloat(operacoes.poll().getValor());
+                                break;
+                            case "/":
+                                res /= Float.parseFloat(operacoes.poll().getValor());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    inicio = false;
+                    ultimoToken = lex.getToken();
+                }
+                
+                 variaveis.put(nomeVariavel, res);
             }
             
-            if(lex.getToken() == Token.NUMERO) {
-                if(inicio) {
-                    res = Float.parseFloat(lex.getValor());
-                } else {
-                    n = Float.parseFloat(lex.getValor());
-                }
-            }
-            if(lex.getToken() == Token.OP_ARIT) {
-                lex = operacoes.poll();
-                switch(lex.getValor()) {
-                    case "+":
-                        res += Float.parseFloat(lex.getValor());
-                        break;
-                    case "-":
-                        res -= Float.parseFloat(lex.getValor());
-                        break;
-                    case "*":
-                        res *= Float.parseFloat(lex.getValor());
-                        break;
-                    case "/":
-                        res /= Float.parseFloat(lex.getValor());
-                        break;
-                    default:
-                        break;
-                }
-            }
-            inicio = false;
-            ultimoToken = lex.getToken();
+
+        }
+        
+        for (Map.Entry<String, Float> entry : variaveis.entrySet()) {
+            System.out.println(entry.getKey() + " = " + entry.getValue());
         }
     }
     
