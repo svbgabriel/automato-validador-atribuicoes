@@ -10,15 +10,10 @@ public enum Simbolo {
     UNDERSCORE ("_"),
     IGUAL ("="),
     PONTO ("\\."),
-//    OP_ARIT_MAIS ("\\+"),
-//    OP_ARIT_MENOS ("\\-"),
-//    OP_ARIT_MULT ("\\*"),
-//    OP_ARIT_DIV ("\\/"),
     OPERADOR ("[\\+|\\-|\\*|\\/]"),
     PONTO_VIRGULA (";"),
     ESPACO (" ");
-    
-    //IDENTIFICADOR ("[a-z]([a-z]|[0-9]|_)*");
+
     
     private final String pattern;
     
@@ -41,9 +36,7 @@ public enum Simbolo {
     
     
     
-    public static void main(String[] args) {
-        System.out.println(what("\n"));
-    }
-    
-    
+//    public static void main(String[] args) {
+//        System.out.println(what("\n"));
+//    }
 }
