@@ -4,8 +4,9 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
- *
- * @author sumlauf
+ * @author Gabriel Batista
+ * @author Henrique Albanese
+ * @author Sérgio Umlauf
  */
 public class MaquinaEstados {
     

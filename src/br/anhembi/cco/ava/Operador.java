@@ -1,8 +1,9 @@
 package br.anhembi.cco.ava;
 
 /**
- *
- * @author sumlauf
+ * @author Gabriel Batista
+ * @author Henrique Albanese
+ * @author Sérgio Umlauf
  */
 public enum Operador {
     MAIS ("+", 1),

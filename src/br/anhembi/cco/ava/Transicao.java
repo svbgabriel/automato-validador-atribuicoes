@@ -1,8 +1,9 @@
 package br.anhembi.cco.ava;
 
 /**
- *
- * @author lab735
+ * @author Gabriel Batista
+ * @author Henrique Albanese
+ * @author Sérgio Umlauf
  */
 public class Transicao {
     

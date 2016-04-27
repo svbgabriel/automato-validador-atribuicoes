@@ -4,7 +4,8 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 
 /**
- *
+ * @author Gabriel Batista
+ * @author Henrique Albanese
  * @author Sérgio Umlauf
  */
 public class Calculadora {

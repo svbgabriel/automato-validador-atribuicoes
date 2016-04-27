@@ -3,7 +3,8 @@ package br.anhembi.cco.ava;
 import java.util.Objects;
 
 /**
- *
+ * @author Gabriel Batista
+ * @author Henrique Albanese
  * @author Sérgio Umlauf
  */
 public class Estado {

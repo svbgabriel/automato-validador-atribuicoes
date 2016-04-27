@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * @author Gabriel Batista
+ * @author Henrique Albanese
  * @author Sérgio Umlauf
  */
 public class TabelaTransicaoEstados {    

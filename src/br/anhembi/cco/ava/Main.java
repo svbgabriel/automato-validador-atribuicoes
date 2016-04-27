@@ -2,14 +2,15 @@ package br.anhembi.cco.ava;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
- * @author sumlauf
+ * @author Gabriel Batista
+ * @author Henrique Albanese
+ * @author Sérgio Umlauf
  */
 public class Main {
 
@@ -33,7 +34,7 @@ public class Main {
 
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("C:\\users\\sumlauf\\Temp\\atribuicao.txt"));
+            br = new BufferedReader(new InputStreamReader(System.in));
             while ((linha = br.readLine()) != null) {
                 System.out.println(linha);
                 if(linha.contains(";")) {

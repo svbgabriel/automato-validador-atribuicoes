@@ -1,7 +1,8 @@
 package br.anhembi.cco.ava;
 
 /**
- *
+ * @author Gabriel Batista
+ * @author Henrique Albanese
  * @author Sérgio Umlauf
  */
 public class Lexema {
