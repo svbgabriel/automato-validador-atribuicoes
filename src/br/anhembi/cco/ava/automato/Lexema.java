@@ -1,6 +1,8 @@
-package br.anhembi.cco.ava;
+package br.anhembi.cco.ava.automato;
 
 /**
+ * Representa um lexema da linguagem.
+ * 
  * @author Gabriel Batista
  * @author Henrique Albanese
  * @author Sérgio Umlauf

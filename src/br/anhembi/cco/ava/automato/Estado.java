@@ -1,8 +1,15 @@
-package br.anhembi.cco.ava;
+package br.anhembi.cco.ava.automato;
 
 import java.util.Objects;
 
 /**
+ * Representa um estado do autômato.
+ * 
+ * Um simples POJO, onde o atributo fim indica se o estado é final.
+ * 
+ * A classe faz o override de <code>equals</code> para a comparação com outro
+ * estado.
+ * 
  * @author Gabriel Batista
  * @author Henrique Albanese
  * @author Sérgio Umlauf

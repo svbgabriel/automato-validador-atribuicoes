@@ -1,11 +1,14 @@
 package br.anhembi.cco.ava;
 
+import br.anhembi.cco.ava.program.Parser;
+import br.anhembi.cco.ava.automato.Automato;
+import br.anhembi.cco.ava.calculator.Calculadora;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+
 
 /**
  * @author Gabriel Batista
@@ -14,107 +17,41 @@ import java.util.Map;
  */
 public class Main {
 
-    public static void main(String[] args) {
-
-        String input = "";  //bola = 10 + tatu * 2;";
-        Map<String, String> variaveis = new HashMap<>();
-        //variaveis.put("tatu", "4");
-        
-        /*
-        atribuicao.txt:
-        -----------------------------
-        casa = 2
-        batata = 4.8
-
-        x = 3 + casa * batata;
-        -----------------------------
-        */
-        
-        String linha;
-
+    public static void main(String[] args) {      
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new InputStreamReader(System.in));
-            while ((linha = br.readLine()) != null) {
-                System.out.println(linha);
-                if(linha.contains(";")) {
-                    input = linha.trim();
-                } else {
-                    if(!linha.equals("")) {
-                        String[] termos = linha.split(" ");
-                        variaveis.put(termos[0], termos[2]);
-                    }
-                }
+            //br = new BufferedReader(new InputStreamReader(System.in));
+            br = new BufferedReader(new FileReader("C:\\Users\\sumlauf\\Temp\\atribuicao.txt"));
+            
+            Parser parser = new Parser();
+            
+            // Lê o conteúdo do arquivo.
+            parser.readSource(br, true);
+            
+            // Pega a atribuição que o parser encontrou.
+            String atribuicao = parser.getAtribuicao();
+            
+            // Verifica se a atribuição e válida.
+            Automato automato = new Automato();
+            boolean atribuicaoValida = automato.processa(atribuicao);
+
+            if(atribuicaoValida) {
+                System.out.println("Atribuição é válida.");
+
+                // Parseia a atribuição, substituindo as variáveis por seus valores.
+                String infixo = parser.parseVariables(automato.getLexemas());
+
+                //  Calcula a atribuição. A calculadora recebe uma expressão infixa.
+                Calculadora calc = new Calculadora();
+                double res = calc.calcula(infixo);
+                System.out.println(parser.getVariavelAtribuicao() + " = " + res);
+            } else {
+                System.out.println("Atribuição é inválida!");
             }
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println("Erro: " + ex.getMessage());
         } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        
-        
-        
-        
-        Estado q0 = new Estado("Inicial");
-        Estado q1 = new Estado("PrimeiraLetra");
-        Estado q2 = new Estado("Igual");
-        Estado q3 = new Estado("LetraMinuscula");
-        Estado q4 = new Estado("OperadorDepoisDeIdentificador");
-        Estado q7 = new Estado("PrimeiroDigito");
-        Estado q8 = new Estado("Ponto");
-        Estado q9 = new Estado("SegundoDigito");
-        Estado q5 = new Estado("Final", true); // Estado final
-        
-        
-        TabelaTransicaoEstados tte = new TabelaTransicaoEstados();
-        // q0 -->
-        tte.add(q0, Simbolo.LETRA_MINUSCULA, q1);
-        // q1 -->
-        tte.add(q1, Simbolo.LETRA_MINUSCULA, q1);
-        tte.add(q1, Simbolo.DIGITO, q1);
-        tte.add(q1, Simbolo.UNDERSCORE, q1);
-        tte.add(q1, Simbolo.IGUAL, q2, Token.IDENTIFICADOR, Token.OP_ATRIB);
-        // q2 -->
-        tte.add(q2, Simbolo.LETRA_MINUSCULA, q3);
-        tte.add(q2, Simbolo.DIGITO, q7);
-        // q3 -->
-        tte.add(q3, Simbolo.LETRA_MINUSCULA, q3);
-        tte.add(q3, Simbolo.DIGITO, q3);
-        tte.add(q3, Simbolo.UNDERSCORE, q3);
-        tte.add(q3, Simbolo.OPERADOR, q4, Token.IDENTIFICADOR, Token.OP_ARIT);
-        tte.add(q3, Simbolo.PONTO_VIRGULA, q5, Token.IDENTIFICADOR);
-        // q4 -->
-        tte.add(q4, Simbolo.LETRA_MINUSCULA, q3);
-        tte.add(q4, Simbolo.DIGITO, q7);
-        // q7 -->
-        tte.add(q7, Simbolo.DIGITO, q7);
-        tte.add(q7, Simbolo.OPERADOR, q4, Token.NUMERO, Token.OP_ARIT);
-        tte.add(q7, Simbolo.PONTO, q8);
-        tte.add(q7, Simbolo.PONTO_VIRGULA, q5, Token.NUMERO);
-        // q8 -->
-        tte.add(q8, Simbolo.DIGITO, q9);
-        // q9 -->
-        tte.add(q9, Simbolo.DIGITO, q9);
-        tte.add(q9, Simbolo.OPERADOR, q4, Token.NUMERO, Token.OP_ARIT);
-        tte.add(q9, Simbolo.PONTO_VIRGULA, q5, Token.NUMERO);
-        
-        
-        MaquinaEstados maquina = new MaquinaEstados(tte);
-        boolean atribuicaoValida = maquina.processa(input, q0);
-        
-        if(atribuicaoValida) {
-            System.out.println("Atribuição é válida.");
-                       
-            String infix = maquina.parseVariables(variaveis);
-            
-            Calculadora calc = new Calculadora();
-            double res = calc.calcula(infix);
-            
-            System.out.println(maquina.getNomeVariavel() + " = " + res);
-            
-            //System.out.println("infix = " + infix);
-        } else {
-            System.out.println("Atribuição é inválida!");
+            System.out.println("Erro: " + ex.getMessage());
         }
     }
       

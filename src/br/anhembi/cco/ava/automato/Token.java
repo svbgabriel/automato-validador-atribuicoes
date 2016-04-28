@@ -1,6 +1,8 @@
-package br.anhembi.cco.ava;
+package br.anhembi.cco.ava.automato;
 
 /**
+ * Enum dos tokens reconhecidos pela linguagem.
+ * 
  * @author Gabriel Batista
  * @author Henrique Albanese
  * @author Sérgio Umlauf

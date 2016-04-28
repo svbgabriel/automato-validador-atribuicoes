@@ -1,6 +1,10 @@
-package br.anhembi.cco.ava;
+package br.anhembi.cco.ava.automato;
 
 /**
+ * Enum de possíveis símbolos processáveis pelo autômato.
+ * 
+ * Pode ser entendido como o dicionário do autômato.
+ * 
  * @author Gabriel Batista
  * @author Henrique Albanese
  * @author Sérgio Umlauf
@@ -34,10 +38,4 @@ public enum Simbolo {
         }
         return null;
     }
-    
-    
-    
-//    public static void main(String[] args) {
-//        System.out.println(what("\n"));
-//    }
 }

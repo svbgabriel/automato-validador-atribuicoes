@@ -1,15 +1,23 @@
-package br.anhembi.cco.ava;
+package br.anhembi.cco.ava.calculator;
 
 import java.util.Stack;
 import java.util.StringTokenizer;
 
 /**
+ * Calculadora de expressões.
+ * 
  * @author Gabriel Batista
  * @author Henrique Albanese
  * @author Sérgio Umlauf
  */
 public class Calculadora {
     
+    /**
+     * Calcula o valor de uma expressão.
+     * 
+     * @param sentenca  Uma expressão infixa.
+     * @return          O valor da expressão.
+     */
     public double calcula(String sentenca) {
         String posfixo = infixoParaPosfixo(sentenca);
         

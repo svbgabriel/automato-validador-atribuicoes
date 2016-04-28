@@ -1,20 +1,27 @@
-package br.anhembi.cco.ava;
+package br.anhembi.cco.ava.automato;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
+ * Representa a tabela de transição de estados do autômato.
+ * 
+ * Um <code>Set</code> é utilizado como container de estados,
+ * para que uma mesma <code>Transicao</code> não seja inserida em duplicidade.
+ * Uma transicao é dita igual a outra se ambas possuem o mesmo estado inicial
+ * e símbolo.
+ * 
  * @author Gabriel Batista
  * @author Henrique Albanese
  * @author Sérgio Umlauf
  */
 public class TabelaTransicaoEstados {    
     
-    private final List<Transicao> estados;
+    private final Set<Transicao> estados;
 
     
     public TabelaTransicaoEstados() {
-        this.estados = new ArrayList<>();
+        this.estados = new HashSet<>();
     }
     
     
@@ -33,17 +40,11 @@ public class TabelaTransicaoEstados {
     }
     
     public void add(Transicao transicao) {
-        for(Transicao t : getEstados()) {
-            if(t.getEstadoInicial().equals(transicao.getEstadoInicial()) && 
-                    t.getSimbolo().equals(transicao.getSimbolo())) {
-                return;
-            }
-        }
-        getEstados().add(transicao);
+        estados.add(transicao);
     }
 
 
-    public List<Transicao> getEstados() {
+    public Set<Transicao> getEstados() {
         return estados;
     }
 
