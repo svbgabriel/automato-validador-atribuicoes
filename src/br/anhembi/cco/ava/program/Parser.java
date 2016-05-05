@@ -39,25 +39,27 @@ public class Parser {
     public void readSource(BufferedReader br, boolean printLines) throws IOException {
         String linha;
         int i = 1;
-        
-        if(printLines) {
+        boolean passouLinhaBranco = false;
+
+        if (printLines) {
             System.out.println("BOF");
         }
         while ((linha = br.readLine()) != null) {
-            if(printLines) {
+            if (printLines) {
                 System.out.println(i + ":  " + linha);
             }
-            if(linha.contains(";")) {
+            if (passouLinhaBranco) {
                 atribuicao = linha.trim();
+            }
+            if (!passouLinhaBranco && !linha.trim().equals("")) {
+                String[] termos = linha.split(" ");
+                variaveis.put(termos[0], termos[2]);
             } else {
-                if(!linha.equals("")) {
-                    String[] termos = linha.split(" ");
-                    variaveis.put(termos[0], termos[2]);
-                }
+                passouLinhaBranco = true;
             }
             i++;
         }
-        if(printLines) {
+        if (printLines) {
             System.out.println("EOF\n");
         }
     }
