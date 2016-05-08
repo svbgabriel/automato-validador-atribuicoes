@@ -17,20 +17,20 @@ import java.io.InputStreamReader;
  */
 public class Main {
 
-    public static void main(String[] args) {      
+    public static void main(String[] args) {
         BufferedReader br = null;
         try {
-            //br = new BufferedReader(new InputStreamReader(System.in));
-            br = new BufferedReader(new FileReader("C:\\Users\\sumlauf\\Temp\\atribuicao.txt"));
-            
+            br = new BufferedReader(new InputStreamReader(System.in));
+            //br = new BufferedReader(new FileReader("C:\\Users\\sumlauf\\Temp\\atribuicao.txt"));
+
             Parser parser = new Parser();
-            
+
             // Lê o conteúdo do arquivo.
             parser.readSource(br, true);
-            
+
             // Pega a atribuição que o parser encontrou.
             String atribuicao = parser.getAtribuicao();
-            
+
             // Verifica se a atribuição e válida.
             Automato automato = new Automato();
             boolean atribuicaoValida = automato.processa(atribuicao);
@@ -54,5 +54,5 @@ public class Main {
             System.out.println("Erro: " + ex.getMessage());
         }
     }
-      
+
 }
