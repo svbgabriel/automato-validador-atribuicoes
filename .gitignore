@@ -18,3 +18,5 @@ nb-configuration.xml
 !lib/*.jar
 
 .DS_Store
+/bin/
+/target/
